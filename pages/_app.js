@@ -1,7 +1,7 @@
-import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+// inject common stylesheets
+import './_app.scss';
+
+export default function App ({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
-
-export default MyApp

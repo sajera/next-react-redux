@@ -1,8 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
+import styles from './index.module.scss';
+import { BtnLocal } from '../components/button';
 
-export default function Home() {
+export default function Home () {
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +15,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Go to <Link href="/test">Test</Link>
         </h1>
 
         <p className={styles.description}>
@@ -22,10 +24,25 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <BtnLocal className={styles.card} onClick={e => console.log('BtnLocal.onClick', e)}>
+            <h2>WTF ? &rarr;</h2>
+            <p>Lets log a bit in console ;)</p>
+          </BtnLocal>
+
+          <BtnLocal className={styles.card} onClick={e => console.log('BtnLocal.onClick', e)}>
+            <h2> Test page &rarr;</h2>
+            <p> TODO navigation as service action </p>
+          </BtnLocal>
+
+          <BtnLocal className={styles.card} onClick={e => console.log('BtnLocal.onClick', e)}>
+            <h2> Bootstrap &rarr;</h2>
+            <p> TODO add Twitter Bootstrap </p>
+          </BtnLocal>
+
+          <BtnLocal className={styles.card} onClick={e => console.log('BtnLocal.onClick', e)}>
+            <h2> Auth &rarr;</h2>
+            <p> TODO private and partially private pages </p>
+          </BtnLocal>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Learn &rarr;</h2>
@@ -65,5 +82,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  )
+  );
 }
