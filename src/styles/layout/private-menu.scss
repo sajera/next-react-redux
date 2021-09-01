@@ -1,0 +1,161 @@
+/* ========================================================================
+     Component: SideMenu
+ ========================================================================== */
+$side-menu-item-color:              #e1e2e3;
+$side-menu-item-color-active:       $nav-top-bg;
+$side-menu-item-bg-active:          darken($aside-bg, 10%);
+$side-menu-border-color:            darken($aside-bg, 5%);
+
+$side-menu-icon-color:              $side-menu-item-color;
+$side-menu-icon-color-active:       $nav-top-bg;
+$side-menu-disabled-color:          darken($side-menu-item-color, 50%);
+
+$side-menu-heading-color:           #919DA8;
+
+$side-menu-item-border-wd:          3px;
+
+$offset-h:                          12px;
+$offset-v:                          24px;
+
+//#menu
+.nav-custom {
+    background-color: $aside-bg;
+
+    .nav-item {
+        padding: 0;
+        font-size: 14px;
+        position: relative;
+        border: 0 solid transparent;
+        background-color: transparent;
+        border-left-width: $side-menu-item-border-wd;
+        @include transition(#{"background-color .2s cubic-bezier(0.35, 0, 0.25, 1), border-color .2s cubic-bezier(0.35, 0, 0.25, 1)"});
+        &.nav-header {
+            font-size: 13px;
+            cursor: default;
+            pointer-events: none;
+            letter-spacing: .035em;
+            color: $side-menu-heading-color;
+            padding: $offset-h*0.6 $offset-v/2;
+            padding-right: $offset-v;
+        }
+        &.nav-menu {
+            .nav-menu-toggle {
+
+            }
+            .list-group {
+                margin-left: $offset-v * 0.7;
+            }
+            .nav-link, .nav-action {
+                border-left-width: 0;
+                // padding without skipping border width
+                a { padding-left: $offset-v; }
+            }
+        }
+        &.nav-link {
+
+
+        }
+        &.nav-action {
+
+        }
+        a {
+            display: block;
+            position: relative;
+            text-decoration: none;
+            color: $side-menu-item-color;
+            padding: $offset-h $offset-v;
+            padding-left: $offset-v - $side-menu-item-border-wd;
+            @include transition(#{"color .2s cubic-bezier(0.35, 0, 0.25, 1)"});
+            &:hover {
+                color: $side-menu-icon-color-active;
+            }
+        }
+        &.disabled a {
+            color: $side-menu-disabled-color;
+        }
+        .nav-item-icon {
+            margin-right: 15px;
+        }
+        .nav-item-title {
+            display: inline-block;
+        }
+        .nav-item-badge {
+            top: auto;
+            right: auto;
+            float: right;
+            position: relative;
+            display: inline-block;
+        }
+
+        &.active:not(.nav-menu) {
+            background-color: $side-menu-item-bg-active;
+        }
+        &.active {
+            border-left-color: $side-menu-icon-color-active;
+            .nav-menu-toggle {
+                background-color: $side-menu-item-bg-active;
+            }
+        }
+
+    }
+}
+
+#menu {
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: $side-menu-border-color;
+}
+
+.collapsed {
+    .nav-custom {
+        .nav-item {
+            a { padding-left: $offset-v*0.8 - $side-menu-item-border-wd; }
+            &.nav-header {
+                display: none;
+            }
+
+            .nav-item-icon {
+                font-size: 2em;
+            }
+            .nav-item-title {
+                display: none;
+            }
+            .nav-item-badge {
+                top: 15%;
+                right: 20%;
+                float: none;
+                position: absolute;
+            }
+
+            .dropdown-menu {
+                margin: 0;
+                padding: 0;
+                min-width: 200px;
+                border-radius: 0;
+                background-color: $aside-bg;
+                border-color: $side-menu-border-color;
+                .dropdown-header:first-child {
+                    padding-top: $offset-h;
+                    padding-bottom: $offset-h;
+                    color: $side-menu-item-color;
+                }
+                .dropdown-header:not(:first-child) {
+                    padding: 0;
+                }
+                .nav-item-icon {
+                    font-size: initial;
+                }
+                .nav-item-title {
+                    display: inline-block;
+                }
+                .nav-item-badge {
+                    top: auto;
+                    right: auto;
+                    float: right;
+                    position: relative;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

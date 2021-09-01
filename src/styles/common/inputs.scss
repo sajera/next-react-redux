@@ -1,0 +1,44 @@
+/* ========================================================================
+     Component: inputs
+ ========================================================================== */
+
+
+
+/* ========================================================================
+     input helpers
+ ========================================================================== */
+.form-control {
+    &.no-validation-label {
+        background-image: none;
+        padding-right: 0;
+    }
+}
+
+.app-invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    //font-size: 80%;
+    color: $danger;
+    margin-bottom: 0.5rem;
+}
+
+.app-hidden-control {
+    border: 0;
+    height: 0;
+    width: 1px;
+    padding: 0;
+    line-height: 0;
+    display: block;
+    position: relative;
+}
+
+.required-asterisk {
+    &:after {
+        content: '*';
+        color: $danger;
+        line-height: 0;
+        font-size: 1.5em;
+        display: inline-block;
+    }
+}

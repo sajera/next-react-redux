@@ -1,0 +1,44 @@
+/* ========================================================================
+     Component: drop-zone (ImageCrop)
+ ========================================================================== */
+
+.drop-zone {
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    position: relative;
+    text-align: center;
+    @include transition(300ms);
+    border: 2px dashed transparent;
+    @include user-selection( none );
+    //background-color: #FFFFFF;
+    //border: 2px dashed $gray-darker;
+    &.active {
+        border: 2px solid $success;
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    }
+    &.disabled {
+        cursor: no-drop;
+        background: $gray-d;
+        //background: $gray-dark;
+    }
+    &.success {
+        background: rgba(red($success-light), green($success-light), blue($success-light), 0.3);
+        border-color: rgba(red($success-light), green($success-light), blue($success-light), 0.3);
+    }
+    &.reject {
+        cursor: no-drop;
+        background: rgba(red($danger), green($danger), blue($danger), 0.3);
+        border-color: rgba(red($danger), green($danger), blue($danger), 0.3);
+    }
+}
+
+.has-error {
+    .drop-zone {
+        background: rgba(red($danger), green($danger), blue($danger), 0.1);
+    }
+}
+
+.has-success {
+    border-color: rgba(red($info-light), green($info-light), blue($info-light), 0.1);
+}

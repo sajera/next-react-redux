@@ -1,5 +1,10 @@
 {
   "extends": ["next/core-web-vitals"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
   "globals": {
     "window": true,
     "console": true

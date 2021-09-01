@@ -2,8 +2,18 @@
 // NOTE import css dependencies
 @import '~normalize-scss/sass/normalize/import-now';
 
-html,
-body {
+// toastr
+@import '~react-redux-toastr/src/styles/index.scss';
+// Override bootstrap variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap.scss';
+// application common styles
+@import 'mixin';
+@import 'common/index';
+@import 'layout/index';
+
+html, body {
   margin: 0;
   padding: 0;
   color: #1A1A1A;

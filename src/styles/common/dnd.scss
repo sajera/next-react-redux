@@ -1,0 +1,47 @@
+/* ========================================================================
+     Drag & Drop class helpers
+ ========================================================================== */
+$target-allow-bg:           #40C0E8;
+$target-back-bg:            rgba(0, 0, 0, 0.06);
+$target-disallow-bg:        silver;
+$source-disabled-shadow:    inset #000 0 0 7px;
+$animation:                 color .15s ease-in-out, background-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+.in-hand, .dragging-item {
+    overflow: hidden;
+    @include transition($animation);
+    &.common-item {
+        width: 450px;
+        border: 1px dashed black;
+        background-color: #FFFFFF;
+    }
+}
+
+.dragging-source {
+    opacity: inherit;
+    @include transition($animation);
+    &.was-taken {
+        opacity: 0.5;
+        @include box-shadow($source-disabled-shadow);
+    }
+}
+
+.drop-target {
+    @include transition($animation);
+    &.back-place  {
+        background-color: $target-back-bg;
+    }
+    &.allowed-place  {
+        background-color: $target-allow-bg;
+    }
+    &.disallowed-place  {
+        background-color: $target-disallow-bg;
+    }
+    &.disable-child-events {
+        * { pointer-events: none; }
+    }
+}
+
+.drop-group {
+    border: 2px dashed $card-default-border-color;
+}
