@@ -1,0 +1,114 @@
+/* ========================================================================
+         Common helpers
+ ========================================================================== */
+
+// Extra Background helpers
+@function custom-color($key) {
+  @return map-get($colors, $key);
+}
+
+@mixin bg-color-variant($bg, $text-color: #fff) {
+  $amountOfLight: 10%;
+  & {
+    background-color: custom-color($bg);
+    color: $text-color !important;
+  }
+  &-light {
+    $col: custom-color($bg + '-light');
+    background-color: #{$col};
+    color: $text-color !important;
+  }
+  &-dark {
+    $col: custom-color($bg + '-dark');
+    background-color: #{$col};
+    color: $text-color !important;
+  }
+  small {
+    color: inherit;
+  }
+}
+
+@mixin make-bg($bg, $text-color: #fff) {
+  background-color: $bg;
+  color: $text-color !important;
+}
+
+// Animation helpers
+// -----------------------------------
+.a-dur-1 { animation-duration: 100ms; }
+.a-dur-2 { animation-duration: 200ms; }
+.a-dur-3 { animation-duration: 300ms; }
+.a-dur-4 { animation-duration: 400ms; }
+.a-dur-5 { animation-duration: 500ms; }
+.a-dur-6 { animation-duration: 600ms; }
+.a-dur-7 { animation-duration: 700ms; }
+.a-dur-8 { animation-duration: 800ms; }
+.a-dur-9 { animation-duration: 900ms; }
+
+.transition { @include transition(all 250ms ease-in-out); }
+
+// Text helpers
+// --------------------
+.text-white         { color: #fff !important; }
+.text-inverse       { color: $inverse !important; }
+.text-alpha         { color: $text-alpha !important; }
+.text-pink          { color: $pink !important; }
+.text-purple        { color: $purple !important; }
+.text-dark          { color: $dark !important; }
+.text-alpha-inverse { color: $text-alpha-inverse !important; }
+.text-green         { color: $green !important; }
+.text-yellow        { color: $yellow !important; }
+.text-gray-darker   { color: $gray-darker !important; }
+.text-gray-dark     { color: $gray-dark !important; }
+.text-gray-d        { color: $gray-d !important; }
+.text-gray          { color: $gray !important; }
+.text-gray-light    { color: $gray-light !important; }
+.text-gray-lighter  { color: $gray-lighter !important; }
+.text-inherit       { color: inherit !important; }
+
+// Background helpers
+// -----------------------------------
+.bg-primary      { @include bg-color-variant('primary'); }
+.bg-success      { @include bg-color-variant('success'); }
+.bg-info         { @include bg-color-variant('info'); }
+.bg-warning      { @include bg-color-variant('warning'); }
+.bg-danger       { @include bg-color-variant('danger'); }
+.bg-green        { @include bg-color-variant('green'); }
+.bg-pink         { @include bg-color-variant('pink'); }
+.bg-purple       { @include bg-color-variant('purple'); }
+.bg-inverse      { @include bg-color-variant('inverse'); }
+.bg-yellow       { @include bg-color-variant('yellow'); }
+
+.bg-white        { @include make-bg(#fff, inherit); }
+.bg-gray-darker  { @include make-bg($gray-darker); }
+.bg-gray-dark    { @include make-bg($gray-dark); }
+.bg-gray         { @include make-bg($gray, $body-color); }
+.bg-gray-light   { @include make-bg($gray-light, $body-color); }
+.bg-gray-lighter { @include make-bg($gray-lighter, $body-color); }
+.bg-card-cap     { @include make-bg($card-cap-bg, inherit); }
+
+.bg-transparent  { background-color: transparent !important; }
+
+// Background image
+.bg-center {
+    background-size: cover;
+    background-position: center center;
+}
+.bg-contain {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.bg-cover {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+// cursor
+.cursor-move        { cursor: move !important; }
+.cursor-grab        { cursor: grab !important; }
+.cursor-no-drop     { cursor: no-drop !important; }
+.cursor-pointer     { cursor: pointer !important; }
+.cursor-grabbing    { cursor: grabbing !important; }
+
+.text-nowrap { white-space: nowrap; }

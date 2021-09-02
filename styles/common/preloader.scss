@@ -1,0 +1,70 @@
+/* ========================================================================
+     Component: Preloader
+ ========================================================================== */
+.def-preloader {
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    vertical-align: middle;
+    & > * { vertical-align: middle; }
+    &:after {
+        content: '';
+        height: 100%;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+    }
+}
+
+.box-preloader {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    & > * { vertical-align: middle; }
+    &:after {
+        content: '';
+        height: 100%;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+    }
+}
+
+#SPW {
+    width: 234px;
+    height: 28px;
+    margin: auto;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    .sp {
+        top:0;
+        width: 28px;
+        height: 28px;
+        position: absolute;
+        @include scale(.3);
+        border-radius: 19px;
+        background-color: rgb(0, 0, 0);
+        @include animation(playSP, 1500ms, infinite, normal);
+        @include keyframes(playSP) {
+            0% {
+                @include scale(1);
+                background-color: rgb(0,0,0);
+            }
+            100% {
+                @include scale(.3);
+                background-color: rgb(255,255,255);
+            }
+        }
+    }
+    #SP_1 { left: 0; @include animation-delay(.1s); }
+    #SP_2 { left: 29px; @include animation-delay(.25s); }
+    #SP_3 { left: 58px; @include animation-delay(.4s); }
+    #SP_4 { left: 88px; @include animation-delay(.55s); }
+    #SP_5 { left: 117px; @include animation-delay(.7s); }
+    #SP_6 { left: 146px; @include animation-delay(.85s); }
+    #SP_7 { left: 175px; @include animation-delay(1s); }
+    #SP_8 { left: 205px; @include animation-delay(1.15s); }
+}

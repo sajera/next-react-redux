@@ -1,0 +1,75 @@
+// @include box-shadow(#{"inset 5px 5px 5px rgba(255, 255, 255, 0.9)"});
+@mixin box-shadow($props) {
+    -webkit-box-shadow: $props;
+    -moz-box-shadow:    $props;
+    box-shadow:         $props;
+}
+// @include transition( padding-top 0.5s ease );
+@mixin transition ($transition) {
+    -webkit-transition: $transition;
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    transition:         $transition;
+}
+// @include user-selection( none );
+@mixin user-selection ( $select ) {
+    -webkit-touch-callout:  $select;
+    -webkit-user-select:    $select;
+    -moz-user-select:       $select;
+    -ms-user-select:        $select;
+    user-select:            $select;
+}
+
+@mixin transform ($transforms) {
+    -webkit-transform:  $transforms;
+    -moz-transform:     $transforms;
+    -o-transform:       $transforms;
+    -ms-transform:      $transforms;
+    transform:          $transforms;
+}
+@mixin rotate ($deg) {
+    @include transform(rotate(#{$deg}deg));
+}
+@mixin scale ($scale) {
+    @include transform(scale($scale));
+}
+@mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+}
+@mixin skew ($x, $y) {
+    @include transform(skew(#{$x}deg, #{$y}deg));
+}
+@mixin transform-origin ($origin) {
+    -webkit-transform-origin:   $origin;
+    -ms-transform-origin:       $origin;
+    -o-transform-origin:        $origin;
+    transform-origin:           $origin;
+}
+@mixin animation-delay ($delay) {
+    -webkit-animation-delay:    $delay;
+    -moz-animation-delay:       $delay;
+    -o-animation-delay:         $delay;
+    animation-delay:            $delay;
+}
+@mixin animation ($name, $duration, $delay, $ease) {
+    -webkit-animation: $name $duration $delay $ease;
+    -moz-animation:    $name $duration $delay $ease;
+    animation:         $name $duration $delay $ease;
+}
+@mixin animation-ease ($name, $duration, $delay) {
+    @include animation($name, $duration, $delay, ease);
+}
+@mixin keyframes ($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
+}

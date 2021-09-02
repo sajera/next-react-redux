@@ -1,0 +1,32 @@
+/* ========================================================================
+     Component: circles
+ ========================================================================== */
+
+.circle {
+    $point: 10px;
+    $point-xs: 6px;
+    $point-sm: 8px;
+    $point-md: $point;
+    $point-lg: 12px;
+    $point-xl: 15px;
+
+    display: inline-block;
+    width: $point;
+    height: $point;
+    border-radius: 50%;
+    margin: 0 .3em;
+    background-color: #ddd;
+    vertical-align: baseline;
+    border: 2px solid transparent;
+    &.text-left {
+        margin-left: 0;
+    }
+    &.text-right {
+        margin-right: 0;
+    }
+    &.xs { width: $point-xs; height: $point-xs; }
+    &.sm { width: $point-sm; height: $point-sm; }
+    //&.md { width: $point-md; height: $point-md; }
+    &.lg { width: $point-lg; height: $point-lg; }
+    &.xl { width: $point-xl; height: $point-xl; }
+}

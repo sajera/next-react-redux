@@ -1,0 +1,72 @@
+/* --------------------------------------------
+    PRIVATE LAYOUT custom behavior expanded ? 'expanded' : 'collapsed'
+html
+  body
+    div#root
+      div#privateLayout
+         header#header
+         nav#menu
+         main#content
+-----------------------------------------------  */
+$scroll-bar-wd:         21px;
+
+$aside-wd:              268px;
+$aside-wd-collapsed:    70px;
+$aside-bg:              #383D4E;
+$content-bg:            transparent;
+
+@mixin layoutWithAnimation () {
+    @include transition(#{"width .2s cubic-bezier(0.35, 0, 0.25, 1), translate .2s cubic-bezier(0.35, 0, 0.25, 1)"});
+}
+
+#privateLayout {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+
+    #menu, #content {
+        float: left;
+        overflow: hidden;
+        position: relative;
+        @include layoutWithAnimation();
+        -webkit-overflow-scrolling: touch; // draw a divider for the sidebar
+        .hide-scroll-bar {
+            height: 100%;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            width: calc(100% + #{$scroll-bar-wd});
+        }
+    }
+
+    #content, #menu { height: calc(100vh - #{$navbar-height}); }
+
+    #content {
+        overflow-y: auto;
+        background-color: $content-bg;
+    }
+
+    #menu { width: $aside-wd; }
+    #content { width: calc(100% - #{$aside-wd}); }
+    &.collapsed {
+        #menu { width: $aside-wd-collapsed; }
+        #content { width: calc(100% - #{$aside-wd-collapsed}); }
+        @include media-breakpoint-down(sm) {
+            #content { width: 100%; }
+            #menu { width: 0; }
+        }
+    }
+
+    /* when screen less than md expanded menu will should not disturb content */
+    @include media-breakpoint-down(sm) {
+        #menu { z-index: 100; position: absolute; }
+    }
+    &.expanded {
+        @include media-breakpoint-down(sm) {
+            #content { width: 100%; }
+        }
+    }
+
+}

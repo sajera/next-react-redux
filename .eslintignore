@@ -1,0 +1,4 @@
+# test folder
+/*/__tests__/*
+# specific files can be provided out of the folder
+*.test.*
