@@ -18,6 +18,14 @@ import config from './constants';
 
 export const nextReduxWrapper = createWrapper(makeStore, { debug: true });
 
+// NOTE just store hydration data to allow select where it will be need
+function hydrate (state = {}, action) {
+  if (action.type === HYDRATE) {
+    return action.payload;
+  }
+  return state;
+}
+
 function makeStore () {
 
   // NOTE teach redux-saga-controller to HYDRATE
@@ -34,18 +42,19 @@ function makeStore () {
   });
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore(
-    function (state = {}, action) {
-      if (action.type === HYDRATE) {
-        console.log('test.HYDRATE', state, action);
-        return action.payload;
-      }
-      return combinedReducers(state, action);
-    },
-    // combineReducers({
-    //   [path]: reducer,
-    //   toastr,
-    //   form,
-    // }),
+    // function (state = {}, action) {
+    //   if (action.type === HYDRATE) {
+    //     console.log('test.HYDRATE', state, action);
+    //     return action.payload;
+    //   }
+    //   return combinedReducers(state, action);
+    // },
+    combineReducers({
+      [path]: reducer,
+      hydrate,
+      toastr,
+      form,
+    }),
     (
       typeof window === 'undefined' || config.production ? compose : (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)
     )(applyMiddleware(sagaMiddleware))

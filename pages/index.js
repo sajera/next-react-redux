@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { useController, subscribeAction, unsubscribeAction } from 'redux-saga-controller';
 
 // local dependencies
-import { controller } from '../src/controller';
+import { appCtrl } from '../src/app-controller';
 import { nextReduxWrapper } from '../src/store';
 import { Preloader } from '../src/components/preloader';
 
@@ -14,7 +14,7 @@ import { Preloader } from '../src/components/preloader';
 
 
 export default function Index (props) {
-  const [state, { initialize }] = useController(controller);
+  const [state, { initialize }] = useController(appCtrl);
 
   useEffect(() => { initialize({}); }, [initialize]);
 
@@ -60,11 +60,11 @@ export default function Index (props) {
 export const getStaticProps = nextReduxWrapper.getStaticProps(
   store => async ({ req, res, ...etc }) => {
     // regular stuff
-    store.dispatch(subscribeAction(controller));
-    store.dispatch(controller.action.initialize());
+    store.dispatch(subscribeAction(appCtrl));
+    store.dispatch(appCtrl.action.initialize());
     // end the saga
     store.dispatch(END);
-    store.dispatch(unsubscribeAction(controller));
+    store.dispatch(unsubscribeAction(appCtrl));
 
     await store.sagaTask.toPromise();
   }

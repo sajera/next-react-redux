@@ -8,8 +8,8 @@ import { takeEvery, put, call, delay, select } from 'redux-saga/effects';
 import { silence } from '../../src/runtime-error';
 
 // configure
-export const test2Ctrl = create({
-  prefix: 'test2',
+export const test1Ctrl = create({
+  prefix: 'test1',
   actions: {
     initialize: 'INITIALIZE',
   },
@@ -20,25 +20,19 @@ export const test2Ctrl = create({
     roles: []
   },
   subscriber: function * () {
-    yield takeEvery(test2Ctrl.action.initialize.TYPE, silence, initializeExe);
+    yield takeEvery(test1Ctrl.action.initialize.TYPE, silence, initializeExe);
   }
 });
 
-export default test2Ctrl;
+export default test1Ctrl;
 
 function * initializeExe ({ type, payload }) {
-  // NOTE check hydration data
-  const hydratedState = yield select(state => state.hydrate);
-  const myHydratedState = test2Ctrl.select(hydratedState);
-  yield put(test2Ctrl.action.updateCtrl(myHydratedState));
-
   console.log(`%c ${type} `, 'color: #FF6766; font-weight: bolder; font-size: 12px;'
-    , '\n hydratedState:', hydratedState
-    , '\n myHydratedState:', myHydratedState
     , '\n payload:', payload
   );
-
+  // TODO restore tokens
+  // TODO restore user data
   yield delay(3e3);
   // NOTE initialization done
-  yield put(test2Ctrl.action.updateCtrl({ initialized: true }));
+  yield put(test1Ctrl.action.updateCtrl({ initialized: true }));
 }

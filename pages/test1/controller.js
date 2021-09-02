@@ -1,7 +1,8 @@
 
 // outsource dependencies
+import { HYDRATE } from 'next-redux-wrapper';
 import { create } from 'redux-saga-controller';
-import { takeEvery, put, call, delay } from 'redux-saga/effects';
+import { takeEvery, put, call, delay, select } from 'redux-saga/effects';
 
 // local dependencies
 import { silence } from '../../src/runtime-error';
@@ -26,7 +27,14 @@ export const test1Ctrl = create({
 export default test1Ctrl;
 
 function * initializeExe ({ type, payload }) {
+  // NOTE check hydration data
+  const hydratedState = yield select(state => state.hydrate);
+  const myHydratedState = test1Ctrl.select(hydratedState);
+  yield put(test1Ctrl.action.updateCtrl(myHydratedState));
+
   console.log(`%c ${type} `, 'color: #FF6766; font-weight: bolder; font-size: 12px;'
+    , '\n hydratedState:', hydratedState
+    , '\n myHydratedState:', myHydratedState
     , '\n payload:', payload
   );
   yield delay(3e3);

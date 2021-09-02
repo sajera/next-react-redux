@@ -3,22 +3,23 @@
 import Link from 'next/link';
 import { END } from 'redux-saga';
 import React, { useEffect } from 'react';
-import { subscribeAction, useController } from 'redux-saga-controller';
+import { subscribeAction, useControllerActions, useControllerData, useControllerSubscribe } from 'redux-saga-controller';
 
 // local dependencies
-import Main from '../../src/index';
 import styles from './test.module.css';
 import { test2Ctrl } from './controller';
 import { nextReduxWrapper } from '../../src/store';
 import { Preloader } from '../../src/components/preloader';
 
 export default function Test () {
-  const [{ initialized }, { initialize }] = useController(test2Ctrl);
+  useControllerSubscribe(test2Ctrl);
+  const { initialized } = useControllerData(test2Ctrl);
+  const { initialize } = useControllerActions(test2Ctrl);
 
   // NOT client side run initialization on component mount
   useEffect(() => { initialize({}); }, [initialize]);
 
-  return <Main>
+  return <div>
     <Preloader active={!initialized}>
       <div className={styles.container}>
         <h1>
@@ -43,7 +44,7 @@ export default function Test () {
         </Link>
       </li>
     </ul>
-  </Main>;
+  </div>;
 }
 
 export const getStaticProps = nextReduxWrapper.getStaticProps(

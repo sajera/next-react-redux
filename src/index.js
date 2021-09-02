@@ -2,18 +2,19 @@
 // outsource dependencies
 import ReduxToastr from 'react-redux-toastr';
 import React, { memo, useEffect } from 'react';
-import { useController } from 'redux-saga-controller';
-import { Route, Switch, Redirect, Router } from 'react-router-dom';
+import { useControllerData, useControllerActions, useControllerSubscribe } from 'redux-saga-controller';
 
 // local dependencies
 import { config } from './constants';
-import controller from './controller';
+import { appCtrl } from './app-controller';
 import Preloader from './components/preloader';
 
 
 export default memo(function App ({ children }) {
   // NOTE subscribe app controller
-  const [{ initialized }, { initialize }] = useController(controller);
+  useControllerSubscribe(appCtrl);
+  const { initialized } = useControllerData(appCtrl);
+  const { initialize } = useControllerActions(appCtrl);
   // NOTE initialize business logic
   useEffect(() => { initialize(); }, [initialize]);
   // NOTE select view based on application state
