@@ -1,22 +1,26 @@
 
 // outsource dependencies
 import Link from 'next/link'
-import { END } from 'redux-saga';
 import React, { useEffect } from 'react';
-import { useController, subscribeAction, unsubscribeAction } from 'redux-saga-controller';
+import { useControllerActions, useControllerData } from 'redux-saga-controller';
 
 // local dependencies
-import { appCtrl } from '../src/app-controller';
-import { nextReduxWrapper } from '../src/store';
-import { Preloader } from '../src/components/preloader';
+import { appRootCtrl } from './_app/controller';
+import { Preloader } from '../components/preloader';
 
 // configure
 
 
 export default function Index (props) {
-  const [state, { initialize }] = useController(appCtrl);
-
-  useEffect(() => { initialize({}); }, [initialize]);
+  const state = useControllerData(appRootCtrl);
+  const actions = useControllerActions(appRootCtrl);
+  // NOTE app common actions
+  useEffect(() => {
+    console.log('%c Index ', 'color: #FF6766; font-weight: bolder; font-size: 12px;'
+      , '\n state:', state
+      , '\n actions:', actions
+    );
+  }, [state, actions]);
 
   return <div>
     <h1> Props: <small> { JSON.stringify(props) } </small> </h1>
@@ -42,30 +46,3 @@ export default function Index (props) {
     </Preloader>
   </div>;
 }
-// export const getInitialProps = nextReduxWrapper.getInitialPageProps(
-//   store => async ({ req, res, ...etc }) => {
-//     console.log('Index.getInitialProps');
-//
-//     // regular stuff
-//     store.dispatch(subscribeAction(controller));
-//     store.dispatch(controller.action.initialize());
-//     // end the saga
-//     store.dispatch(END);
-//     store.dispatch(unsubscribeAction(controller));
-//
-//     await store.sagaTask.toPromise();
-//   }
-// );
-
-export const getStaticProps = nextReduxWrapper.getStaticProps(
-  store => async ({ req, res, ...etc }) => {
-    // regular stuff
-    store.dispatch(subscribeAction(appCtrl));
-    store.dispatch(appCtrl.action.initialize());
-    // end the saga
-    store.dispatch(END);
-    store.dispatch(unsubscribeAction(appCtrl));
-
-    await store.sagaTask.toPromise();
-  }
-);

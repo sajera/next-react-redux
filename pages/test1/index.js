@@ -8,8 +8,8 @@ import { subscribeAction, useControllerSubscribe, useControllerData, useControll
 // local dependencies
 import styles from './test.module.css';
 import { test1Ctrl } from './controller';
-import { nextReduxWrapper } from '../../src/store';
-import { Preloader } from '../../src/components/preloader';
+import { nextReduxWrapper } from '../../store/store';
+import { Preloader } from '../../components/preloader';
 
 export default function Test () {
   useControllerSubscribe(test1Ctrl);
@@ -51,7 +51,7 @@ export const getStaticProps = nextReduxWrapper.getStaticProps(
   store => async ({ req, res, ...etc }) => {
     // NOTE server side run initialization
     store.dispatch(subscribeAction(test1Ctrl));
-    store.dispatch(test1Ctrl.action.initialize());
+    store.dispatch(test1Ctrl.action.initializeSSR());
     // NOTE end the saga
     store.dispatch(END);
 
