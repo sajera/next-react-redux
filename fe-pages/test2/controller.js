@@ -1,15 +1,14 @@
 
 // outsource dependencies
-import { HYDRATE } from 'next-redux-wrapper';
 import { create } from 'redux-saga-controller';
 import { takeEvery, put, call, delay, select } from 'redux-saga/effects';
 
 // local dependencies
-import { silence } from '../../store/runtime-error';
+import { silence } from '../../fe-services/saga.helper';
 
 // configure
-export const test1Ctrl = create({
-  prefix: 'test1',
+export const test2Ctrl = create({
+  prefix: 'test2',
   actions: {
     initialize: 'INITIALIZE',
     initializeSSR: 'SSR_INITIALIZE',
@@ -21,12 +20,12 @@ export const test1Ctrl = create({
     roles: []
   },
   subscriber: function * () {
-    yield takeEvery(test1Ctrl.action.initialize.TYPE, silence, initializeExe);
-    yield takeEvery(test1Ctrl.action.initializeSSR.TYPE, silence, initializeSSRExe);
+    yield takeEvery(test2Ctrl.action.initialize.TYPE, silence, initializeExe);
+    yield takeEvery(test2Ctrl.action.initializeSSR.TYPE, silence, initializeSSRExe);
   }
 });
 
-export default test1Ctrl;
+export default test2Ctrl;
 
 function * initializeSSRExe ({ type, payload }) {
   // NOTE check request data to get important info
@@ -34,23 +33,25 @@ function * initializeSSRExe ({ type, payload }) {
     , '\n payload:', payload
   );
 
-  yield delay(1e3);
+  yield delay(2e3);
   // NOTE initialization done
-  yield put(test1Ctrl.action.updateCtrl({ initialized: true }));
+  yield put(test2Ctrl.action.updateCtrl({ initialized: true }));
 }
 
 function * initializeExe ({ type, payload }) {
   // NOTE check hydration data
   const hydratedState = yield select(state => state.hydrate);
-  const myHydratedState = test1Ctrl.select(hydratedState);
-  yield put(test1Ctrl.action.updateCtrl(myHydratedState));
+  const myHydratedState = test2Ctrl.select(hydratedState);
+  yield put(test2Ctrl.action.updateCtrl(myHydratedState));
 
   console.log(`%c ${type} `, 'color: #FF6766; font-weight: bolder; font-size: 12px;'
     , '\n hydratedState:', hydratedState
     , '\n myHydratedState:', myHydratedState
     , '\n payload:', payload
   );
-  yield delay(3e3);
+
+  yield delay(5e3);
   // NOTE initialization done
-  yield put(test1Ctrl.action.updateCtrl({ initialized: true }));
+  yield put(test2Ctrl.action.updateCtrl({ initialized: true }));
 }
+

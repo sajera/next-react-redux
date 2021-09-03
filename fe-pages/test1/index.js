@@ -1,17 +1,15 @@
 
 // outsource dependencies
 import Link from 'next/link';
-import { END } from 'redux-saga';
 import React, { useEffect } from 'react';
-import { subscribeAction, useControllerSubscribe, useControllerData, useControllerActions } from 'redux-saga-controller';
+import { useControllerSubscribe, useControllerData, useControllerActions } from 'redux-saga-controller';
 
 // local dependencies
 import styles from './test.module.css';
 import { test1Ctrl } from './controller';
-import { nextReduxWrapper } from '../../store/store';
-import { Preloader } from '../../components/preloader';
+import { Preloader } from '../../fe-components/preloader';
 
-export default function Test () {
+export default function Test1 () {
   useControllerSubscribe(test1Ctrl);
   const { initialized } = useControllerData(test1Ctrl);
   const { initialize } = useControllerActions(test1Ctrl);
@@ -46,15 +44,3 @@ export default function Test () {
     </ul>
   </div>;
 }
-
-export const getStaticProps = nextReduxWrapper.getStaticProps(
-  store => async ({ req, res, ...etc }) => {
-    // NOTE server side run initialization
-    store.dispatch(subscribeAction(test1Ctrl));
-    store.dispatch(test1Ctrl.action.initializeSSR());
-    // NOTE end the saga
-    store.dispatch(END);
-
-    await store.sagaTask.toPromise();
-  }
-);

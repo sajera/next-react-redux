@@ -4,7 +4,7 @@ import { create } from 'redux-saga-controller';
 import { takeEvery, put, call, delay, select } from 'redux-saga/effects';
 
 // local dependencies
-import { silence } from '../../store/runtime-error';
+import { silence } from '../../fe-services/saga.helper';
 
 // IMPORTANT the main controller initialized in browser only (FE)
 // it provide ability to contain page runtime common data

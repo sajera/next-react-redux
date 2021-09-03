@@ -1,20 +1,15 @@
 
 // outsource dependencies
-import App from 'next/app';
 import ReduxToastr from 'react-redux-toastr';
 import React, { memo, useEffect } from 'react';
-import { nextReduxWrapper } from '../../store/store';
 import { useControllerActions, useControllerData, useControllerSubscribe } from 'redux-saga-controller';
-
-// inject common stylesheets
-import '../../styles/index.scss';
 
 // local dependencies
 import { appRootCtrl } from './controller';
 import { Maintenance } from './maintenance';
 
 // NOTE subscribe app controller only on FE side no sense to do this for SSR
-const Main = memo(function Main ({ children }) {
+export const Main = memo(function Main ({ children }) {
   useControllerSubscribe(appRootCtrl);
   const { initialize } = useControllerActions(appRootCtrl);
   const { health, initialized } = useControllerData(appRootCtrl);
@@ -38,13 +33,3 @@ const Main = memo(function Main ({ children }) {
     />
   </>;
 });
-
-class WrappedApp extends App {
-  render () {
-    const { Component, pageProps } = this.props;
-    return <Main as="span"> <Component {...pageProps} /> </Main>;
-  }
-}
-
-export default nextReduxWrapper.withRedux(WrappedApp);
-

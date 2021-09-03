@@ -3,7 +3,7 @@
 import React, { memo } from 'react';
 
 // local dependencies
-import { CogIcon, SorDirection } from '../../components/icon';
+import { CogIcon, SorDirection } from '../../fe-components/icon';
 
 // configure
 

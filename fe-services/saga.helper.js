@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { call } from 'redux-saga/effects';
 
 // local dependencies
-import { config } from '../constants';
+import { config } from '../fe-constants';
 
 /**
  * helper to simplify handling exception
