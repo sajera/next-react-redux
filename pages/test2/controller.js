@@ -5,13 +5,14 @@ import { create } from 'redux-saga-controller';
 import { takeEvery, put, call, delay, select } from 'redux-saga/effects';
 
 // local dependencies
-import { silence } from '../../src/runtime-error';
+import { silence } from '../../store/runtime-error';
 
 // configure
 export const test2Ctrl = create({
   prefix: 'test2',
   actions: {
     initialize: 'INITIALIZE',
+    initializeSSR: 'SSR_INITIALIZE',
   },
   initial: {
     initialized: false, // prevent redirect from page and show instead current page and it behavior - global preloader
@@ -21,10 +22,22 @@ export const test2Ctrl = create({
   },
   subscriber: function * () {
     yield takeEvery(test2Ctrl.action.initialize.TYPE, silence, initializeExe);
+    yield takeEvery(test2Ctrl.action.initializeSSR.TYPE, silence, initializeSSRExe);
   }
 });
 
 export default test2Ctrl;
+
+function * initializeSSRExe ({ type, payload }) {
+  // NOTE check request data to get important info
+  console.log(`%c ${type} `, 'color: #FF6766; font-weight: bolder; font-size: 12px;'
+    , '\n payload:', payload
+  );
+
+  yield delay(1e3);
+  // NOTE initialization done
+  yield put(test2Ctrl.action.updateCtrl({ initialized: true }));
+}
 
 function * initializeExe ({ type, payload }) {
   // NOTE check hydration data
@@ -42,3 +55,4 @@ function * initializeExe ({ type, payload }) {
   // NOTE initialization done
   yield put(test2Ctrl.action.updateCtrl({ initialized: true }));
 }
+

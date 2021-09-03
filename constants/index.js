@@ -25,5 +25,5 @@ function isDebugEnabledByLocation () {
 }
 
 function isEnabled (value) {
-  return /^((true)|1){1,1}$/i.test(value);
+  return /^(true|1)$/i.test(value);
 }

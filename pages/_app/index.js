@@ -1,42 +1,32 @@
 
 // outsource dependencies
-import React, { memo, useEffect } from 'react';
 import App from 'next/app';
-import { END } from 'redux-saga';
-import { nextReduxWrapper } from '../../src/store';
-import {
-  subscribeAction,
-  useControllerActions,
-  useControllerData,
-  useControllerSubscribe
-} from 'redux-saga-controller';
+import ReduxToastr from 'react-redux-toastr';
+import React, { memo, useEffect } from 'react';
+import { nextReduxWrapper } from '../../store/store';
+import { useControllerActions, useControllerData, useControllerSubscribe } from 'redux-saga-controller';
 
 // inject common stylesheets
 import '../../styles/index.scss';
 
 // local dependencies
-import { appCtrl } from '../../src/app-controller';
-import Preloader from '../../src/components/preloader';
-import ReduxToastr from 'react-redux-toastr';
+import { appRootCtrl } from './controller';
+import { Maintenance } from './maintenance';
 
-
-// class WrappedApp extends App {
-//   render () {
-//     const { Component, pageProps } = this.props;
-//     return <Component {...pageProps} />;
-//   }
-// }
-
-const WrappedApp = memo(function App ({ Component, pageProps }) {
-  // NOTE subscribe app controller only on FE side no sense to do this for SSR only public data
-  useControllerSubscribe(appCtrl);
-  const { helth } = useControllerData(appCtrl);
-  const { initialize } = useControllerActions(appCtrl);
+// NOTE subscribe app controller only on FE side no sense to do this for SSR
+const Main = memo(function Main ({ children }) {
+  useControllerSubscribe(appRootCtrl);
+  const { initialize } = useControllerActions(appRootCtrl);
+  const { health, initialized } = useControllerData(appRootCtrl);
   // NOTE initialize auth logic
   useEffect(() => { initialize(); }, [initialize]);
-  // IMPORTANT do not add any preloader here !!
+  // NOTE internal API(BE) does not ready to provide information or handle any actions
+  if (!health) { return <Maintenance />; }
+  // IMPORTANT do not add any preloader here !!! only common things
+  // TODO notify (modal/toasts/alerts/etc...)
   return <>
-    <Component { ...pageProps } />
+    { !initialized ? 'process auth' : 'DONE' }
+    { children }
     <ReduxToastr
       progressBar
       timeOut={2000}
@@ -48,6 +38,13 @@ const WrappedApp = memo(function App ({ Component, pageProps }) {
     />
   </>;
 });
+
+class WrappedApp extends App {
+  render () {
+    const { Component, pageProps } = this.props;
+    return <Main as="span"> <Component {...pageProps} /> </Main>;
+  }
+}
 
 export default nextReduxWrapper.withRedux(WrappedApp);
 

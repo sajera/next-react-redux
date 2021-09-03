@@ -11,7 +11,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 // import { createBrowserHistory as createHistory } from 'history';
 
 // local dependencies
-import config from './constants';
+import config from '../constants';
 
 // NOTE export history outside of components to be able dispatch navigation actions from anywhere!
 // export const history = createHistory();

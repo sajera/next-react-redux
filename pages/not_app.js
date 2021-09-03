@@ -3,7 +3,7 @@
 import React, { memo } from 'react';
 import App from 'next/app';
 import { END } from 'redux-saga';
-import { nextReduxWrapper } from '../src/store';
+import { nextReduxWrapper } from '../store/store';
 import { subscribeAction, useControllerSubscribe } from 'redux-saga-controller';
 
 // inject common stylesheets
